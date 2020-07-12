@@ -1,5 +1,5 @@
 import express from 'express';
-import crmRouter from './src/routes/crmRoutes';
+import routes from './src/routes/crmRoutes';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
@@ -18,11 +18,10 @@ mongoose.connect('mongodb://localhost:27017/CRMdb', {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// routes(app);
+routes(app);
 
 // Serving Static files
 app.use(express.static('public'));
-app.use('/', crmRouter);
 
 app.get('/', (req, res) => {
     res.send(`Server running on port ${PORT}`);

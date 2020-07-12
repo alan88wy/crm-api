@@ -1,3 +1,4 @@
+import express from 'express';
 import {
     addNewContact,
     getContacts,
@@ -6,25 +7,27 @@ import {
     deleteContact,
 } from '../controller/crmController';
 
-const routes = (app) => {
-    app.route('/contact')
-        // Get list of contacts
-        .get((req, res, next) => {
-            // Middleware
-            console.log(`Request from: ${req.originalUrl}`);
-            console.log(`Request type: ${req.method}`);
-            next();
-        }, getContacts)
-        // Save contact
-        .post(addNewContact);
+const crmRouter = express.Router();
 
-    app.route('/contact/:contactID')
-        // Get Contact by contact Id
-        .get(getContactWithID)
-        // Update contact by Contact Id
-        .put(updateContact)
-        // Delete contact by Id
-        .delete(deleteContact);
-};
+// Get list of contacts
+crmRouter.get(
+    '/contact',
+    (req, res, next) => {
+        // Middleware
+        console.log(`Request from: ${req.originalUrl}`);
+        console.log(`Request type: ${req.method}`);
+        next();
+    },
+    getContacts
+);
+// Save contact
+crmRouter.post('/contact', addNewContact);
 
-export default routes;
+// Get Contact by contact Id
+crmRouter.get('/contact/:contactID', getContactWithID);
+// Update contact by Contact Id
+crmRouter.put('/contact/:contactID', updateContact);
+// Delete contact by Id
+crmRouter.delete('/contact/:contactID', deleteContact);
+
+module.exports = crmRouter;
