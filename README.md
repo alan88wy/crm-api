@@ -1,1 +1,3 @@
-# API to manage CRM database based on ExpressJS and MongoDB
+# CRM App
+
+Simple contact manager API build with MongoDB, ExpressJS and NodeJS.
