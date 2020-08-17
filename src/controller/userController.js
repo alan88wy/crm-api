@@ -43,17 +43,7 @@ export const registerUser = (req, res) => {
       message: 'Invalid firstName or lastName!'
     });
 
-  if (req.body.password !== req.body.confirmPassword) {
-    res.status(401).json({
-      message: 'Password do not match!'
-    })
-  }
-
-  const reqUser = req.body;
-
-  delete reqUser.comparePassword;
-
-  const newUser = new User(reqUser);
+  const newUser = new User(req.body);
 
   newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
 
