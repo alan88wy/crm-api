@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import validator from 'validator';
 
 import {
   UserSchema
@@ -31,6 +32,16 @@ export const registerUser = (req, res) => {
       });
     }
   });
+
+  if (!validator.isEmpty(req.body.email))
+    res.status(400).json({
+      message: 'Invalid Email!'
+    });
+
+  if (!validator.isString(req.body.firstName) || !validator.isString(req.body.lastName))
+    res.status(400).json({
+      message: 'Invalid firstName or lastName!'
+    });
 
   if (req.body.password !== req.body.confirmPassword) {
     res.status(401).json({
