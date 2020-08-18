@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import helmet from 'helmet';
+import RateLimit from 'express-rate-limit';
 
 import routes from './src/routes/crmRoutes';
 
@@ -24,6 +25,16 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
+
+// Setup rate limit
+
+const limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit no of request per IP
+  delayMs: 0 // disable delays
+});
+
+app.use(limiter);
 
 // JWT Setup
 
