@@ -36,6 +36,9 @@ const limiter = RateLimit({
 
 app.use(limiter);
 
+// Can also apply to requests that begin with /api/
+// app.use("/api/", apiLimiter);
+
 // JWT Setup
 
 app.use((req, res, next) => {
